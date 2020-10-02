@@ -20,6 +20,7 @@ class _MainAppState extends State<MainApp> {
   //Forms
   final _formKey = GlobalKey<FormState>();
   var _nameitemController = TextEditingController();
+  var _whoController = TextEditingController();
   var _priceController = TextEditingController();
 
   //List about the List
@@ -64,6 +65,7 @@ class _MainAppState extends State<MainApp> {
                     children:[
                       //Name of the bottons in the row
                       _listItemName(i),
+                      _listwhoController(i),
                       _listItemPrice(i),
                       _listDelete(i),
                     ],
@@ -98,13 +100,26 @@ class _MainAppState extends State<MainApp> {
     );
   }
 
+  //Label who
+  _listwhoController(int i)
+  {
+    return Expanded(
+      child: Text(
+          _listagem[i]["who"].toString(),
+          style: TextStyle(
+            fontSize: 17,
+          )
+      ),
+    );
+  }
+
   //Label Price
   _listItemPrice(int i)
   {
     String text = _listagem[i]["price"] != null ? "R\$ "+_listagem[i]["price"].toStringAsFixed(2) : "";
     return Expanded(
       child: Text(
-          text
+        text
       ),
     );
   }
@@ -149,7 +164,13 @@ class _MainAppState extends State<MainApp> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(labelText: "Name of the Item*"),
-              ), TextFormField(
+              ),
+                TextFormField(
+                  controller: _whoController,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(labelText: "Who is the person"),
+                ),
+                TextFormField(
                   controller: _priceController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(labelText: "Price", prefixText: "R\$ "),
@@ -172,9 +193,11 @@ class _MainAppState extends State<MainApp> {
                     setState(() {
                       _listagem.add({
                         "name": _nameitemController.text,
+                        "who": _whoController.text,
                         "price": double.tryParse(_priceController.text) ?? 0,
                       });
                       _nameitemController.text = "";
+                      _whoController.text = "";
                       _priceController.text = "";
                     });
                     Navigator.of(context).pop();
