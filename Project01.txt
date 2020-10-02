@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:social_share/social_share.dart'; // dependencies: social_share: ^2.0.5
-//http://www.macoratti.net/19/07/flut_fomval1.htm
 
 void main() {
   runApp(MaterialApp(
@@ -19,12 +18,10 @@ class _MainAppState extends State<MainApp> {
 
   //Forms
   final _formKey = GlobalKey<FormState>();
-  var _nameitemController = TextEditingController();
-  var _priceController = TextEditingController();
-
+  var _itemController = TextEditingController();
   //List about the List
-  //List _listagem=['Thing 0001', 'Thing 0010', 'Thing 0011','Thing 0100','Thing 0101','Thing 0110','Thing 0111','Thing 1000','Thing 1001','Thing 1010'];
-  List _listagem=[];
+  List _listagem=['Thing 0001', 'Thing 0010', 'Thing 0011','Thing 0100','Thing 0101','Thing 0110','Thing 0111','Thing 1000','Thing 1001','Thing 1010'];
+  //List _sublistagem=['Teste 0001', 'Teste 0010', 'Teste 0011','Teste 0100','Teste 0101','Teste 0110','Teste 0111','Teste 1000','Teste 1001','Teste 1010'];
 
   //The fix page / Menu
   @override
@@ -61,14 +58,28 @@ class _MainAppState extends State<MainApp> {
                   ),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:[
-                      //Name of the bottons in the row
-                      _listItemName(i),
-                      _listItemPrice(i),
-                      _listDelete(i),
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _listagem[i].toString(),
+                        ),
+                      ),
+                      //Botton Remove: Remove something in the list
+                      IconButton(
+                        icon: Icon(
+                          Icons.delete_outline,
+                          size: 22.0,
+                          //color: Colors.red[900],
+                          color: Colors.cyan,
+                        ),
+                        onPressed: (){
+                          setState(() {
+                            _listagem.removeAt(i);
+                          });
+                        },
+                      ),
                     ],
-                  )
-              ),
+                  )),
           ],
         ),
       ),
@@ -82,52 +93,6 @@ class _MainAppState extends State<MainApp> {
     );
   }
 
-  //Label Name
-  _listItemName(int i)
-  {
-    return Expanded(
-      child: Text(
-          _listagem[i]["name"].toString(),
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 19,
-              fontStyle: FontStyle.italic,
-              color: Colors.pinkAccent,
-          )
-      ),
-    );
-  }
-
-  //Label Price
-  _listItemPrice(int i)
-  {
-    String text = _listagem[i]["price"] != null ? "R\$ "+_listagem[i]["price"].toStringAsFixed(2) : "";
-    return Expanded(
-      child: Text(
-          text
-      ),
-    );
-  }
-
-  //Botton Remove: Remove something in the list
-  _listDelete(int i)
-  {
-    return IconButton(
-      icon: Icon(
-        Icons.delete_outline,
-        size: 22.0,
-        //color: Colors.red[900],
-        color: Colors.cyan,
-      ),
-      onPressed: (){
-        setState(() {
-          _listagem.removeAt(i);
-        });
-      },
-    );
-  }
-
-
   //About the new item at the list
   _displayDialog(context) async {
     return showDialog(
@@ -136,29 +101,19 @@ class _MainAppState extends State<MainApp> {
           return AlertDialog(
             content: Form(
               key: _formKey,
-              child: Container(
-              child: Column(
-              children: [
-              TextFormField(
-                controller: _nameitemController,
+              child: TextFormField(
+                controller: _itemController,
                 validator: (s) {
-                  if (s.length < 2)
-                    return "Please, type the item with less 2 character's";
+                  if (s.isEmpty)
+                    return "Please, type the item";
                   else
                     return null;
                 },
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(labelText: "Name of the Item*"),
-              ), TextFormField(
-                  controller: _priceController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: "Price", prefixText: "R\$ "),
-               ),
-               ],
-              )
-              )
+                decoration: InputDecoration(labelText: "Item"),
+              ),
             ),
-              actions: <Widget>[
+            actions: <Widget>[
               FlatButton(
                 child: new Text('Cancel'),
                 onPressed: () {
@@ -170,12 +125,8 @@ class _MainAppState extends State<MainApp> {
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     setState(() {
-                      _listagem.add({
-                        "name": _nameitemController.text,
-                        "price": double.tryParse(_priceController.text) ?? 0,
-                      });
-                      _nameitemController.text = "";
-                      _priceController.text = "";
+                      _listagem.add(_itemController.text);
+                      _itemController.text = "";
                     });
                     Navigator.of(context).pop();
                   }
