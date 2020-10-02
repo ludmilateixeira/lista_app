@@ -100,7 +100,7 @@ class _MainAppState extends State<MainApp> {
     );
   }
 
-  //Label who
+  //Label who is the person
   _listwhoController(int i)
   {
     return Expanded(
