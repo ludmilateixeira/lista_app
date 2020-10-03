@@ -4,11 +4,11 @@ Segundo desenvolvimento de um app em Flutter/Dart.
 
 ## Visão geral
 
-O aplicativo é voltado para a criação de uma lista de compra e compartilhamento através de com seus amigxs através da plataforma do Whatsapp. 
+O aplicativo é voltado para a criação de uma lista de compra e compartilhamento com seus amigxs ou familiares através da plataforma do Whatsapp. 
 
 To buy and Share ou Para Comprar e Compartilhar em Português/BR é um termo no qual o intuito é realizar um listagem através de itens de forma crescente e ilimitada para anotação e divulgação.
 
-O app possibilita a adição do item, com possibilidade de inserção do valor e da pessoal responsável pelo item, contudo, o campo não é obrigatório, trazendo assim mais praticidade. 
+O app possibilita a adição do item, com possibilidade de inserção do valor e da pessoa responsável pelo item, contudo, os campos não são obrigatórios, trazendo assim mais praticidade. 
 
 Vídeo explicativo: 
 
